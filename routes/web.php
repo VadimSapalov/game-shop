@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\GamesController;
+use App\Http\Controllers\Admin\SoftwareController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [MainController::class, 'show_main_page']);
+Route::get('/', [SoftwareController::class, 'index'])->name('admin.software.index');
 
-Route::get('/about', [MainController::class, 'show_about_page']);
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('software', SoftwareController::class);
+});
 
-Route::get('/games', [GamesController::class, 'show_all_games']);
-
-Route::get('/games/{game_id}', [GamesController::class, 'show_chosen_game']) -> where('game_id', '[0-9]+');
+Route::get('/about', [MainController::class, 'about']);
