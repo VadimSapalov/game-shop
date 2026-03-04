@@ -6,11 +6,7 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    public function show_main_page() {
-        return view('index');
-    }
-
-    public function show_about_page() {
+    public function about() {
         return ('<h1>About</h1>');
     }
 }
