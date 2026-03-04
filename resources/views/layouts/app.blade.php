@@ -10,7 +10,7 @@
     <nav class="navbar bg-primary">
         <div class="container">
             <a class="navbar-brand text-light" href="/">Game Shop</a>
-            <a class="nav-link active text-light" aria-current="page" href="about">About</a>
+            <a class="nav-link active text-light" aria-current="page" href="/about">About</a>
         </div>
     </nav>
     <main class="flex-grow-1 container">
