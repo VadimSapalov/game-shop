@@ -3,6 +3,13 @@
 @section('title', 'Game Shop')
 
 @section('content')
+
+@if(session('success'))
+    <div style="padding: 15px; background-color: #d4edda; color: #155724; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+@endif
+
 <table>
     <thead>
         <tr>
