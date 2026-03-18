@@ -1,17 +1,63 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Showing:') }} {{ $software->Title }}
+            </h2>
+            <a href="{{ route('admin.software.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                &larr; Back to the list
+            </a>
+        </div>
+    </x-slot>
 
-@section('content')
-<div class="container">
-    <h1>Деталі: {{ $software->Title }}</h1>
-    <ul>
-        <li><strong>ID:</strong> {{ $software->id }}</li>
-        <li><strong>Опис:</strong> {{ $software->Description }}</li>
-        <li><strong>Ціна:</strong> {{ $software->Price }}</li>
-        <li><strong>Дата виходу:</strong> {{ $software->ReleaseDate }}</li>
-    </ul>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Основна інформація в лівій колонці-->
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Software name</h3>
+                                <p class="mt-1 text-lg font-semibold text-gray-900">{{ $software->Title }}</p>
+                            </div>
 
-    <a href="{{ route('admin.software.index') }}">
-        <button type="button">Назад до списку</button>
-    </a>
-</div>
-@endsection
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Description</h3>
+                                <p class="mt-1 text-gray-700 leading-relaxed text-justify">
+                                    {{ $software->Description }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Характеристики в правій колонці -->
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 space-y-4">
+                            <div class="flex justify-between items-center border-b border-gray-200 pb-2">
+                                <span class="text-gray-600 font-medium">Item ID:</span>
+                                <span class="text-gray-900 font-mono">{{ $software->id }}</span>
+                            </div>
+
+                            <div class="flex justify-between items-center border-b border-gray-200 pb-2">
+                                <span class="text-gray-600 font-medium">Price:</span>
+                                <span class="text-2xl font-bold text-green-600">{{ number_format($software->Price, 2) }} $</span>
+                            </div>
+
+                            <div class="flex justify-between items-center border-b border-gray-200 pb-2">
+                                <span class="text-gray-600 font-medium">Release date:</span>
+                                <span class="text-gray-900">{{ \Carbon\Carbon::parse($software->ReleaseDate)->format('d.m.Y') }}</span>
+                            </div>
+
+                            <div class="pt-4 flex space-x-3">
+                                <button class="flex-1 bg-indigo-600 text-white text-center py-2 rounded-lg opacity-50 cursor-not-allowed" disabled>
+                                    Edit (WIP)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
