@@ -28,7 +28,7 @@ class SoftwareController extends Controller
         $software->delete();
 
         return redirect()->route('admin.software.index')
-                         ->with('success', 'Програму видалено');
+                         ->with('success', 'Item is deleted');
     }
 
     //Метод викликання сторінки створення
@@ -51,6 +51,6 @@ class SoftwareController extends Controller
         Software::create($validated);
 
         return redirect()->route('admin.software.index')
-                        ->with('success', 'Програму успішно додано до каталогу');
+                        ->with('success', 'Item has been added to list');
     }
 }
