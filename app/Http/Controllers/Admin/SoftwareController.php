@@ -77,12 +77,10 @@ class SoftwareController extends Controller
         $userId = auth()->id();
 
         try {
-            // Викликаємо процедуру (підстав сюди реальну назву своєї процедури)
             DB::statement('CALL Purchase(?, ?)', [$userId, $software->id]);
             
             return redirect()->back()->with('success', 'Success!');
         } catch (\Exception $e) {
-            // Якщо процедура викликала помилку (v_active > 0), ми сюди потрапимо
             return redirect()->back()->with('error', 'You already have item or an error occured.');
         }
     }
