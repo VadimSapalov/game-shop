@@ -42,7 +42,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                     <!-- Кнопка перегляду ПЗ -->
-                                    <a href="{{ route('admin.software.show', $item->id) }}" class="text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md transition">
+                                    <a href="{{ route('show', $item->id) }}" class="text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md transition">
                                         Show
                                     </a>
                                     
