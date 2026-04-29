@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Software;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SoftwareController extends Controller
 {
@@ -14,12 +15,6 @@ class SoftwareController extends Controller
         $softwares = Software::all();
         
         return view('admin.software.index', ['softwares' => $softwares]);
-    }
-
-    //Метод для відкриття сторінки окремого елемента
-    public function show(Software $software)
-    {
-        return view('admin.software.show', compact('software'));
     }
 
     //Метод для видалення елементу з бази даних
@@ -52,5 +47,43 @@ class SoftwareController extends Controller
 
         return redirect()->route('admin.software.index')
                         ->with('success', 'Item has been added to list');
+    }
+    public function edit(Software $software)
+    {
+        return view('admin.software.edit', compact('software'));
+    }
+
+    public function update(Request $request, Software $software)
+    {
+        $validated = $request->validate([
+            'Title' => 'required|string|max:255',
+            'Description' => 'required|string',
+            'Price' => 'required|numeric|min:0',
+        ]);
+
+        $software->update($validated);
+
+        return redirect()->route('admin.software.index')->with('success', 'Item updated');
+    }
+    public function home()
+    {
+        $softwares = Software::all();
+        
+        return view('home', compact('softwares'));
+    }
+
+    public function purchase(Software $software)
+    {
+        $userId = auth()->id();
+
+        try {
+            // Викликаємо процедуру (підстав сюди реальну назву своєї процедури)
+            DB::statement('CALL Purchase(?, ?)', [$userId, $software->id]);
+            
+            return redirect()->back()->with('success', 'Success!');
+        } catch (\Exception $e) {
+            // Якщо процедура викликала помилку (v_active > 0), ми сюди потрапимо
+            return redirect()->back()->with('error', 'You already have item or an error occured.');
+        }
     }
 }
