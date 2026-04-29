@@ -9,10 +9,17 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    @auth
+                    @if(auth()->user() && auth()->user()->is_admin)
                         <x-nav-link :href="route('admin.software.index')" :active="request()->routeIs('admin.software.*')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
+                    @endif
+                    @auth
+                        @if(!auth()->user()->is_admin)
+                            <x-nav-link :href="route('library')" :active="request()->routeIs('library')">
+                                {{ __('My Library') }}
+                            </x-nav-link>
+                        @endif
                     @endauth
                 </div>
             </div>
@@ -67,11 +74,11 @@
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            @auth
+            @if(auth()->user() && auth()->user()->is_admin)
                 <x-responsive-nav-link :href="route('admin.software.index')" :active="request()->routeIs('admin.software.index')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
-            @endauth
+            @endif
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200">
