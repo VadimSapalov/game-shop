@@ -78,7 +78,7 @@
                                         <form action="{{ route('software.purchase', $software->id) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition">
-                                                Купити
+                                                Buy
                                             </button>
                                         </form>
                                     @endif
