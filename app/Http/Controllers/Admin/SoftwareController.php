@@ -6,15 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Software;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class SoftwareController extends Controller
 {
     //Метод для виведення списку всіх елементів таблиці software
     public function index()
     {
-        $softwares = Software::all();
-        
-        return view('admin.software.index', ['softwares' => $softwares]);
+        return Inertia::render('Admin/Index', [
+            'softwares' => Software::all(),
+        ]);
     }
 
     //Метод для видалення елементу з бази даних
@@ -22,14 +23,14 @@ class SoftwareController extends Controller
     {
         $software->delete();
 
-        return redirect()->route('admin.software.index')
+        return redirect()->route('index')
                          ->with('success', 'Item is deleted');
     }
 
     //Метод викликання сторінки створення
     public function create()
     {
-        return view('admin.software.create');
+        return Inertia::render('Admin/Create');
     }
 
     //Метод збереження створеного елементу в БД
@@ -45,43 +46,46 @@ class SoftwareController extends Controller
 
         Software::create($validated);
 
-        return redirect()->route('admin.software.index')
+        return redirect()->route('index')
                         ->with('success', 'Item has been added to list');
     }
-    public function edit(Software $software)
+    public function edit($id) 
     {
-        return view('admin.software.edit', compact('software'));
+        $software = Software::findOrFail($id); // Шукаємо в базі самі
+
+        return Inertia::render('Admin/Edit', [
+            'software' => [
+                'id' => $software->id,
+                'Title' => $software->Title,
+                'Description' => $software->Description,
+                'Price' => $software->Price,
+            ]
+        ]);
     }
 
-    public function update(Request $request, Software $software)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $item = Software::findOrFail($id);
+        $item->update($request->validate([
             'Title' => 'required|string|max:255',
             'Description' => 'required|string',
             'Price' => 'required|numeric|min:0',
-        ]);
-
-        $software->update($validated);
-
-        return redirect()->route('admin.software.index')->with('success', 'Item updated');
-    }
-    public function home()
-    {
-        $softwares = Software::all();
+        ]));
         
-        return view('home', compact('softwares'));
+        return redirect()->route('index')->with('success', 'Item updated!');
     }
 
-    public function purchase(Software $software)
+    public function purchase($id) // Приймаємо ID
     {
         $userId = auth()->id();
 
         try {
-            DB::statement('CALL Purchase(?, ?)', [$userId, $software->id]);
+            // Викликаємо процедуру, використовуючи $id
+            DB::statement('CALL Purchase(?, ?)', [$userId, $id]);
             
-            return redirect()->back()->with('success', 'Success!');
+            return redirect()->back()->with('success', 'Purchase successful!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'You already have item or an error occured.');
+            return redirect()->back()->with('error', 'You already have this item or an error occurred.');
         }
     }
 }
