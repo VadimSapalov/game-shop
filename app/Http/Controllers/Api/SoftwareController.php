@@ -15,7 +15,11 @@ class SoftwareController extends Controller
     public function index()
     {
         $softwares = Software::all();
-        return SoftwareResource::collection($softwares);
+        
+        return response()->json([
+            'status' => 'success',
+            'data' => $softwares
+        ], 200);
     }
 
     /**
