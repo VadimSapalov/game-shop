@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Software;
 use App\Models\Transaction;
+use Inertia\Inertia;
 
 class MainController extends Controller
 {
@@ -26,7 +27,12 @@ class MainController extends Controller
                 ->exists();
         }
 
-        return view('show', compact('software', 'isOwned'));
+        return Inertia::render('Show', [
+            'software' => $software,
+            'isOwned' => $isOwned,
+            'status' => session('success'),
+            'error' => session('error'),
+        ]);
     }
 
     public function library()
@@ -49,6 +55,8 @@ class MainController extends Controller
                 });
         })->get();
 
-        return view('library', compact('softwares'));
+        return Inertia::render('Library', [
+            'softwares' => $softwares,
+        ]);
     }
 }
