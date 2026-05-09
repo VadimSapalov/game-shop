@@ -5,7 +5,6 @@ import { Head, Link, useForm } from '@inertiajs/react';
 export default function Show({ auth, software, isOwned, status, error }) {
     const Layout = auth.user ? AuthenticatedLayout : GuestLayout;
     
-    // Використовуємо хук useForm для обробки покупки
     const { post, processing } = useForm();
 
     const handlePurchase = (e) => {
@@ -13,7 +12,7 @@ export default function Show({ auth, software, isOwned, status, error }) {
         post(route('purchase', software.id));
     };
 
-    // Форматування дати (аналог Carbon)
+    // Форматування дати
     const releaseDate = new Date(software.ReleaseDate).toLocaleDateString('uk-UA');
 
     return (
@@ -69,7 +68,7 @@ export default function Show({ auth, software, isOwned, status, error }) {
                                     </div>
                                 </div>
 
-                                {/* Права колонка (Характеристики) */}
+                                {/* Права колонка (характеристики) */}
                                 <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 space-y-4">
                                     <div className="flex justify-between items-center border-b border-gray-200 pb-2">
                                         <span className="text-gray-600 font-medium">Item ID:</span>
