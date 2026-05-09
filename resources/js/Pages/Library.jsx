@@ -2,7 +2,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 
 export default function Library({ auth, softwares }) {
-    // Використовуємо AuthenticatedLayout напряму, оскільки бібліотека лише для залогінених
     return (
         <AuthenticatedLayout
             auth={auth}
