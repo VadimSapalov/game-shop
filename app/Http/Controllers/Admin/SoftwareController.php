@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Genre;
 use App\Models\Software;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,9 @@ class SoftwareController extends Controller
     //Метод викликання сторінки створення
     public function create()
     {
-        return Inertia::render('Admin/Create');
+        return Inertia::render('Admin/Create', [
+            'genres' => Genre::all()
+        ]);
     }
 
     //Метод збереження створеного елементу в БД
@@ -42,6 +45,7 @@ class SoftwareController extends Controller
             'Description' => 'required|min:10',
             'Price' => 'required|numeric|min:0.01',
             'ReleaseDate' => 'required|date',
+            'genre_id'    => 'required|exists:genres,id',
         ]);
 
         Software::create($validated);
@@ -51,7 +55,7 @@ class SoftwareController extends Controller
     }
     public function edit($id) 
     {
-        $software = Software::findOrFail($id); // Шукаємо в базі самі
+        $software = Software::findOrFail($id);
 
         return Inertia::render('Admin/Edit', [
             'software' => [
@@ -75,12 +79,12 @@ class SoftwareController extends Controller
         return redirect()->route('index')->with('success', 'Item updated!');
     }
 
-    public function purchase($id) // Приймаємо ID
+    public function purchase($id)
     {
         $userId = auth()->id();
 
         try {
-            // Викликаємо процедуру, використовуючи $id
+            // Виклик процедури використовуючи $id
             DB::statement('CALL Purchase(?, ?)', [$userId, $id]);
             
             return redirect()->back()->with('success', 'Purchase successful!');
