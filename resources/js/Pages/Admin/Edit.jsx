@@ -2,7 +2,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, Link } from '@inertiajs/react';
 
 export default function Edit({ auth, software }) {
-    // Ініціалізуємо форму даними, які прийшли з бази (software)
     const { data, setData, put, processing, errors } = useForm({
         Title: software.Title || '',
         Description: software.Description || '',
@@ -11,7 +10,6 @@ export default function Edit({ auth, software }) {
 
     const submit = (e) => {
         e.preventDefault();
-        // Відправляємо PUT запит на маршрут оновлення
         put(route('update', software.id));
     };
 
