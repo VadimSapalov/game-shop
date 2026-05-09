@@ -8,36 +8,38 @@ export default function GuestLayout({ children }) {
             <nav className="bg-white border-b border-gray-100 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center">
-                        <div className="flex items-center">
-                            <Link href="/">
-                                <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                        
+                        {/* Логотип та назва */}
+                        <div className="flex items-center min-w-0">
+                            <Link href="/" className="shrink-0">
+                                <ApplicationLogo className="block h-8 w-auto sm:h-9 fill-current text-gray-800" />
                             </Link>
-                            <span className="ml-3 font-bold text-lg text-gray-800">Game Store</span>
+                            <span className="ml-2 sm:ml-3 font-bold text-base sm:text-lg text-gray-800 truncate">
+                                Game Store
+                            </span>
                         </div>
 
-                        <div className="flex space-x-4">
+                        {/* Кнопки входу/реєстрації */}
+                        <div className="flex items-center space-x-3 sm:space-x-6 ml-4">
                             <Link
                                 href={route('login')}
-                                className="text-sm text-gray-700 hover:text-gray-900 font-medium"
+                                className="text-xs sm:text-sm text-gray-700 font-medium whitespace-nowrap"
                             >
                                 Log in
                             </Link>
                             <Link
                                 href={route('register')}
-                                className="text-sm text-gray-700 hover:text-gray-900 font-medium"
+                                className="text-xs sm:text-sm bg-gray-800 text-white px-3 py-1.5 rounded-md transition font-medium whitespace-nowrap shadow-sm"
                             >
                                 Register
                             </Link>
                         </div>
+
                     </div>
                 </div>
             </nav>
-
-            {/* Основний контент сторінки */}
-            <main>
-                {/* Ми прибрали sm:max-w-md, тепер контент регулюється всередині сторінок */}
-                {children}
-            </main>
+            
+            <main>{children}</main>
         </div>
     );
 }
