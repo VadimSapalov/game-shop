@@ -5,8 +5,8 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 
-export default function Create({ auth }) {
-    // Ініціалізуємо форму порожніми значеннями
+export default function Create({ auth, genres }) {
+
     const { data, setData, post, processing, errors } = useForm({
         Title: '',
         Description: '',
@@ -16,8 +16,6 @@ export default function Create({ auth }) {
 
     const submit = (e) => {
         e.preventDefault();
-        // Відправляємо POST запит на маршрут збереження
-        // Переконайся, що ім'я маршруту 'admin.software.store' збігається з твоїм web.php
         post(route('store'));
     };
 
@@ -62,6 +60,24 @@ export default function Create({ auth }) {
                                         required
                                     />
                                     <InputError message={errors.Description} class="mt-2" />
+                                </div>
+                                <div>
+                                    <InputLabel htmlFor="genre_id" value="Genre" />
+                                    <select
+                                        id="genre_id"
+                                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                        value={data.genre_id}
+                                        onChange={(e) => setData('genre_id', e.target.value)}
+                                        required
+                                    >
+                                        <option value="">Select a genre</option>
+                                        {genres.map((genre) => (
+                                            <option key={genre.id} value={genre.id}>
+                                                {genre.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <InputError message={errors.genre_id} className="mt-2" />
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
