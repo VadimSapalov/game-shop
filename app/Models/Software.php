@@ -15,9 +15,15 @@ class Software extends Model
         'ReleaseDate',
         'Discount',
         'DeveloperId',
-        'PublisherId'
+        'PublisherId',
+        'genre_id'
     ];
     protected $guarded = [
         'id'
     ];
+
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class);
+    }
 }
