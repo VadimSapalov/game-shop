@@ -23,6 +23,7 @@ export default function Register() {
 
     return (
         <GuestLayout>
+            <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mx-auto">
             <Head title="Register" />
 
             <form onSubmit={submit}>
@@ -115,6 +116,7 @@ export default function Register() {
                     </PrimaryButton>
                 </div>
             </form>
+            </div>
         </GuestLayout>
     );
 }
