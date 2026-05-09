@@ -12,13 +12,20 @@ class SoftwareController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $softwares = Software::all();
-        
+        $query = Software::with('genre');
+
+        if ($request->has('genre_id') && $request->genre_id != '') {
+            $query->where('genre_id', $request->genre_id);
+        }
+
+        $softwares = $query->get();
+
         return response()->json([
             'status' => 'success',
-            'data' => $softwares
+            'count'  => $softwares->count(),
+            'data'   => $softwares
         ], 200);
     }
 
@@ -32,6 +39,7 @@ class SoftwareController extends Controller
             'Description' => 'required|min:10',
             'Price' => 'required|numeric|min:0.01',
             'ReleaseDate' => 'required|date',
+            'genre_id'    => 'required|exists:genres,id',
 
         ]);
 
