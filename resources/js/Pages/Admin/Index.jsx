@@ -32,7 +32,7 @@ export default function Index({ auth, softwares, session }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     
-                    {/* Flash-повідомлення про успіх (отримуємо через props session) */}
+                    {/* Flash-повідомлення про успіх*/}
                     {session?.success && (
                         <div className="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 shadow-sm" role="alert">
                             <p className="font-bold">Success!</p>
